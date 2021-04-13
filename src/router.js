@@ -1,17 +1,22 @@
+import React from 'react';
 import {
   BrowserRouter,
   Switch,
   Route,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
-import Login from './pages/login/login';
+import Create from './pages/create/create';
 
 export default function Router() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Login}/>
-      </Switch>
-    </BrowserRouter>
+    <>
+      <ToastContainer limit={4} />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/create" component={Create} />
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 }
