@@ -6,8 +6,9 @@ import {
   Route,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Chat from './pages/chat/chat';
 
+import PrivateRoute from './components/private-route/private-route';
+import Chat from './pages/chat/chat';
 import Create from './pages/create/create';
 import Login from './pages/login/login';
 
@@ -17,7 +18,9 @@ export default function Router() {
       <ToastContainer limit={4} />
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" children={Chat} />
+          <PrivateRoute exact path="/">
+            <Chat />
+          </PrivateRoute>
           <Route path="/create" component={Create} />
           <Route path="/login" component={Login} />
         </Switch>
