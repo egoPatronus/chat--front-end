@@ -1,0 +1,7 @@
+/* stylelint-disable color-hex-length */
+
+.main-menu__container {
+  background-color: #ffffff;
+  width: 30%;
+  height: 100%;
+}
