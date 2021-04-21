@@ -1,7 +1,35 @@
-/* stylelint-disable color-hex-length */
+/* stylelint-disable color-hex-length, selector-pseudo-class-no-unknown */
 
 .main-menu__container {
   background-color: #ffffff;
   width: 30%;
   height: 100%;
+}
+
+.main-menu__header {
+  background-color: #ededed;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.header__username {
+  font-size: 24px;
+  margin: 0;
+}
+
+.header__dropdown > button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.header__dropdown > button:hover,
+.button__dropdown > button[type="button"]:active {
+  background-color: transparent;
 }

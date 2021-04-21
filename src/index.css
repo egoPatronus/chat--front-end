@@ -1,4 +1,5 @@
 @import url('./assets/fonts/sf-ui/style.css');
+@import url('~bootstrap/dist/css/bootstrap.min.css');
 
 * {
   padding: 0;
@@ -99,4 +100,26 @@
     width: 100%;
     align-self: stretch;
   }
+}
+
+/* Overriding dropdown styles from bootstrap */
+
+.btn-secondary:not(:disabled):not(.disabled):active {
+  background-color: transparent;
+}
+
+.btn-group > button.btn:not(:last-child):not(.dropdown-toggle) {
+  border-bottom-right-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+.btn.btn-secondary:focus {
+  box-shadow: none;
+  background-color: #d5d5d5;
+  border: none;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active:focus {
+  background-color: #d5d5d5;
+  box-shadow: none;
 }
