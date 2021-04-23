@@ -4,6 +4,8 @@
   background-color: #ffffff;
   width: 30%;
   height: 100%;
+  position: relative;
+  border-right: 1px solid #dadada;
 }
 
 .main-menu__header {
@@ -32,4 +34,114 @@
 .header__dropdown > button:hover,
 .button__dropdown > button[type="button"]:active {
   background-color: transparent;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+}
+
+.list__item {
+  height: 73px;
+  pointer-events: auto;
+  transition: background-color 200ms ease-in-out;
+}
+
+.list__item:hover {
+  background-color: #f5f5f5;
+}
+
+.list-item__button {
+  border: none;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+}
+
+.button__profile-picture {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  margin: 0 16px;
+}
+
+.button__content {
+  border-top: 1px solid #f2f2f2;
+  align-self: stretch;
+  flex-grow: 1;
+  padding: 12px;
+}
+
+.content__username {
+  text-align: left;
+  display: block;
+}
+
+.contacts__expand-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.contacts__collapse-button {
+  pointer-events: auto;
+  background-color: transparent;
+  border: none;
+  color: #fafafa;
+  font-size: 19px;
+  bottom: 16px;
+  left: 16px;
+  position: absolute;
+}
+
+.contacts__collapse-button > svg {
+  margin-right: 32px;
+}
+
+.contacts__expand-button:active {
+  background-color: #d5d5d5;
+}
+
+.contacts__header {
+  height: 108px;
+  position: relative;
+  background-color: #00bfa5;
+  pointer-events: auto;
+}
+
+.contacts__list-wrapper {
+  background-color: #ffffff;
+}
+
+.animation__container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+:global(.transition__slide-in-animation-enter) {
+  transform: translateX(-100%);
+}
+
+:global(.transition__slide-in-animation-enter-active) {
+  transition: transform 200ms ease-in-out;
+  transform: translateX(0);
+}
+
+:global(.transition__slide-in-animation-exit) {
+  transform: translateX(0);
+}
+
+:global(.transition__slide-in-animation-exit-active) {
+  transform: translateX(-100%);
+  transition: transform 200ms ease-in-out;
 }
