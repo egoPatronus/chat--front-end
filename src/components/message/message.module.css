@@ -1,0 +1,67 @@
+/* stylelint-disable color-hex-length */
+.message__container {
+  padding: 0 32px;
+}
+
+.message {
+  max-width: 65%;
+  display: flex;
+  margin-top: 2px;
+  position: relative;
+}
+
+.message__body {
+  display: inline-block;
+  border-radius: 7.5px;
+  padding: 8px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  box-shadow: 0 2px 2px 0 #00000021;
+}
+
+.message--right-aligned > .message__body {
+  margin-left: auto;
+}
+
+.message--right-aligned {
+  margin-left: auto;
+}
+
+.message--from-sender {
+  background-color: #dbf7c6;
+}
+
+[data-sender-message="false"] + [data-sender-message="true"],
+[data-sender-message="true"] + [data-sender-message="false"] {
+  margin-top: 12px;
+}
+
+[data-sender-message="false"] + [data-sender-message="true"] .message__body {
+  border-top-right-radius: 0;
+}
+
+[data-sender-message="true"] + [data-sender-message="false"] .message__body {
+  border-top-left-radius: 0;
+}
+
+[data-sender-message="false"] + [data-sender-message="true"] > .message::after {
+  width: 13px;
+  height: 8px;
+  position: absolute;
+  top: 0;
+  right: -13px;
+  content: "";
+  border-left: 8px solid #dbf7c6;
+  border-bottom: 13px solid transparent;
+}
+
+[data-sender-message="true"] + [data-sender-message="false"] .message::before {
+  width: 13px;
+  height: 8px;
+  position: absolute;
+  top: 0;
+  left: -13px;
+  content: "";
+  border-right: 8px solid #ffffff;
+  border-bottom: 13px solid transparent;
+}
