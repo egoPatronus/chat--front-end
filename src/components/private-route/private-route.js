@@ -9,7 +9,7 @@ import isJWT from 'validator/es/lib/isJWT';
 // eslint-disable-next-line react/prop-types
 export default function PrivateRoute({ children, ...rest }) {
   function authRequest() {
-    const token = sessionStorage.getItem('s_id') ?? '';
+    const token = sessionStorage.getItem('auth_token') ?? '';
     if (token) {
       const isValidToken = isJWT(token);
       return isValidToken;

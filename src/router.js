@@ -8,7 +8,7 @@ import {
 import { ToastContainer } from 'react-toastify';
 
 import PrivateRoute from './components/private-route/private-route';
-import Chat from './pages/chat/chat';
+import Room from './pages/room/room';
 import Create from './pages/create/create';
 import Login from './pages/login/login';
 
@@ -19,7 +19,7 @@ export default function Router() {
       <BrowserRouter>
         <Switch>
           <PrivateRoute exact path="/">
-            <Chat />
+            <Room />
           </PrivateRoute>
           <Route path="/create" component={Create} />
           <Route path="/login" component={Login} />

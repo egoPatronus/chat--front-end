@@ -1,9 +1,10 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/require-default-props,
   dot-notation,
   react/default-props-match-prop-types,
   no-underscore-dangle,
 */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CSSTransition from 'react-transition-group/CSSTransition';
@@ -16,12 +17,80 @@ import {
 
 import styles from './main-menu.module.css';
 
-export default function MainMenu({ profile, createRoomCb }) {
+function renderContactsList(
+  expandContactsList,
+  setExpandContactsList,
+  openRoomCb,
+  contacts,
+) {
+  const contactsListNodeRef = useRef(null);
+
+  return (
+    <CSSTransition
+      in={expandContactsList}
+      timeout={200}
+      unmountOnExit
+      classNames="transition__slide-in-animation"
+      nodeRef={contactsListNodeRef}
+    >
+      <div className={styles['contacts__list-wrapper']} ref={contactsListNodeRef}>
+        <header className={styles['contacts__header']}>
+          <button
+            type="button"
+            className={styles['contacts__collapse-button']}
+            onClick={() => setExpandContactsList(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+            >
+              <path fill="#fafafa" d="M12 4l1.4 1.4L7.8 11H20v2H7.8l5.6 5.6L12 20l-8-8 8-8z" />
+            </svg>
+            <span>New chat</span>
+          </button>
+        </header>
+        <ul className={styles['list']}>
+          {contacts?.map((contact) => (
+            <li key={contact._id} className={styles['list__item']}>
+              <button
+                type="button"
+                className={styles['list-item__button']}
+                onClick={() => {
+                  setExpandContactsList(false);
+                  openRoomCb(contact);
+                }}
+              >
+                <img
+                  src="https://via.placeholder.com/150"
+                  alt=""
+                  className={styles['button__profile-picture']}
+                />
+                <div className={styles['button__content']}>
+                  <span className={styles['content__username']}>
+                    {contact.username}
+                  </span>
+                </div>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </CSSTransition>
+  );
+}
+
+export default function MainMenu({ profile, openRoomCb }) {
   const [dropdown, setDropdown] = useState(false);
-  const [slideInAnimation, setSlideInAnimation] = useState(false);
+  const [expandContactsList, setExpandContactsList] = useState(false);
+
   const history = useHistory();
+
   const { username } = profile.user ?? '';
   const { contacts } = profile ?? [];
+  const { rooms } = profile ?? [];
+
   /**
    * Sets the dropdown between expanded and/or collapsed
    */
@@ -42,7 +111,7 @@ export default function MainMenu({ profile, createRoomCb }) {
           <button
             type="button"
             className={styles['contacts__expand-button']}
-            onClick={() => setSlideInAnimation(true)}
+            onClick={() => setExpandContactsList(true)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -77,58 +146,35 @@ export default function MainMenu({ profile, createRoomCb }) {
           </ButtonDropdown>
         </div>
       </header>
+      <ul className={styles['list']}>
+        {rooms?.filter((room) => room.history.length !== 0)?.map((room, index) => (
+          <li key={index} className={styles['list__item']}>
+            <button
+              type="button"
+              className={styles['list-item__button']}
+              onClick={() => openRoomCb(room.users._id)}
+            >
+              <img
+                src="https://via.placeholder.com/150"
+                alt=""
+                className={styles['button__profile-picture']}
+              />
+              <div className={styles['button__content']}>
+                <span className={styles['content__username']}>
+                  {room?.users?.username}
+                </span>
+              </div>
+            </button>
+          </li>
+        ))}
+      </ul>
       <div className={styles['animation__container']}>
-        <CSSTransition
-          in={slideInAnimation}
-          timeout={200}
-          unmountOnExit
-          classNames="transition__slide-in-animation"
-        >
-          <div className={styles['contacts__list-wrapper']}>
-            <header className={styles['contacts__header']}>
-              <button
-                type="button"
-                className={styles['contacts__collapse-button']}
-                onClick={() => setSlideInAnimation(false)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                >
-                  <path fill="#fafafa" d="M12 4l1.4 1.4L7.8 11H20v2H7.8l5.6 5.6L12 20l-8-8 8-8z" />
-                </svg>
-                <span>New chat</span>
-              </button>
-            </header>
-            <ul className={styles['list']}>
-              {contacts.map((contact) => (
-                <li key={contact._id} className={styles['list__item']}>
-                  <button
-                    type="button"
-                    className={styles['list-item__button']}
-                    onClick={() => {
-                      setSlideInAnimation(false);
-                      createRoomCb(contact);
-                    }}
-                  >
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt=""
-                      className={styles['button__profile-picture']}
-                    />
-                    <div className={styles['button__content']}>
-                      <span className={styles['content__username']}>
-                        {contact.username}
-                      </span>
-                    </div>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </CSSTransition>
+        {renderContactsList(
+          expandContactsList,
+          setExpandContactsList,
+          openRoomCb,
+          contacts,
+        )}
       </div>
     </section>
   );
@@ -146,7 +192,7 @@ MainMenu.propTypes = {
       _id: PropTypes.string.isRequired,
     })),
   }).isRequired,
-  createRoomCb: PropTypes.func.isRequired,
+  openRoomCb: PropTypes.func.isRequired,
 };
 
 MainMenu.defaultProps = {
@@ -157,5 +203,5 @@ MainMenu.defaultProps = {
     },
     contacts: [],
   },
-  createRoomCb: () => null,
+  openRoomCb: () => null,
 };

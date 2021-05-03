@@ -13,10 +13,27 @@
 .message__body {
   display: inline-block;
   border-radius: 7.5px;
-  padding: 8px;
   background-color: #ffffff;
   box-sizing: border-box;
   box-shadow: 0 2px 2px 0 #00000021;
+  font-size: 14.2px;
+  min-width: 100px;
+  padding: 4px 8px;
+  position: relative;
+}
+
+.message__content-type--text {
+  margin: 0;
+  padding-right: 64px;
+}
+
+.message__timestamp {
+  float: right;
+  font-size: 11px;
+  color: #00000073;
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
 }
 
 .message--right-aligned > .message__body {
@@ -36,15 +53,19 @@
   margin-top: 12px;
 }
 
-[data-sender-message="false"] + [data-sender-message="true"] .message__body {
+[data-sender-message="false"] + [data-sender-message="true"] .message__body,
+[data-sender-message="true"]:first-child .message__body {
   border-top-right-radius: 0;
 }
 
-[data-sender-message="true"] + [data-sender-message="false"] .message__body {
+[data-sender-message="true"] + [data-sender-message="false"] .message__body,
+[data-sender-message="false"]:first-child .message__body {
   border-top-left-radius: 0;
 }
 
-[data-sender-message="false"] + [data-sender-message="true"] > .message::after {
+/* Add a tail to the sender message */
+[data-sender-message="false"] + [data-sender-message="true"] .message::after,
+[data-sender-message="true"]:first-child .message::after {
   width: 13px;
   height: 8px;
   position: absolute;
@@ -55,7 +76,9 @@
   border-bottom: 13px solid transparent;
 }
 
-[data-sender-message="true"] + [data-sender-message="false"] .message::before {
+/* Add a tail to the recipient message */
+[data-sender-message="true"] + [data-sender-message="false"] .message::before,
+[data-sender-message="false"]:first-child .message::before {
   width: 13px;
   height: 8px;
   position: absolute;

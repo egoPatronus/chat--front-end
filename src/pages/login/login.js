@@ -27,7 +27,7 @@ export default function Login() {
     try {
       const { status, data: jwtToken } = await Axios.post('http://localhost:8000/auth/login', payload);
       if (status === 200) {
-        sessionStorage.setItem('s_id', jwtToken);
+        sessionStorage.setItem('auth_token', jwtToken);
         history.push('/');
       }
     } catch (error) {
